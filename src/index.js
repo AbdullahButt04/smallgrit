@@ -1,7 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
+import pool from "./db/connection.js";
 
-dotenv.config();
+dotenv.config({path: './env'});
 
 const app = express();
 
@@ -15,5 +16,13 @@ app.get('/', (req,res) => {
 app.listen(port, ()=>{
     console.log(`GRIT is listening on PORT: ${port}`);
 });
+let result;
+try {
+    result = await pool.query("SELECT * FROM users");
+} catch (error) {
+    console.log(error);
+}
 
+
+console.log(result[0]);
 console.log("hello");
